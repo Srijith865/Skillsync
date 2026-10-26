@@ -283,29 +283,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json(demoResult);
     }
 
-    // Call Gemma 4 via Google GenAI SDK
+    // Call Gemma 4 via Google GenAI SDK with strict timeout guard
     const aiClient = new GoogleGenAI({ apiKey });
 
-    const prompt = `
-You are the SkillSync AI career engine powered by Gemma 4.
-Perform an ATS match analysis comparing the candidate resume against the job description.
+    // Compact inputs to keep inference latency fast (< 4s)
+    const cleanResumeSlice = resumeText.slice(0, 2500);
+    const cleanJdSlice = jobDescription.slice(0, 2000);
+
+    const prompt = `You are SkillSync AI career engine powered by Gemma 4.
+Perform an ATS match analysis comparing candidate resume against the job description.
 
 ROLE: ${roleTitle}
 COMPANY: ${companyName}
 
 RESUME:
-${resumeText.slice(0, 6000)}
+${cleanResumeSlice}
 
 JOB DESCRIPTION:
-${jobDescription.slice(0, 5000)}
+${cleanJdSlice}
 
 Return ONLY valid JSON matching this schema exactly with no extra commentary:
 {
-  "match_score": <number 0-100>,
-  "match_tier": "<TIER_1_CONTENDER | TIER_2_CONTENDER | QUALIFIED_APPLICANT>",
+  "match_score": 85,
+  "match_tier": "TIER_1_CONTENDER",
   "matching_skills": ["<skill1>", "<skill2>", "<skill3>"],
   "missing_skills": [
-    {"name": "<skill>", "urgency": "<HIGH | MEDIUM>", "reason": "<short reason>"}
+    {"name": "<skill>", "urgency": "HIGH", "reason": "<short reason>"}
   ],
   "resume_tips": [
     "<actionable tip 1>",
@@ -318,41 +321,32 @@ Return ONLY valid JSON matching this schema exactly with no extra commentary:
     {"week": 3, "title": "<Week 3 Title>", "tasks": ["<task 1>", "<task 2>"]},
     {"week": 4, "title": "<Week 4 Title>", "tasks": ["<task 1>", "<task 2>"]}
   ]
-}
-`;
+}`;
 
     try {
-      let response;
-      try {
-        response = await aiClient.models.generateContent({
-          model: aiModel,
-          contents: prompt,
-          config: {
-            responseMimeType: 'application/json',
-            temperature: 0.2,
-          }
-        });
-      } catch (firstErr: any) {
-        // Retry once on transient high-demand (503/429)
-        console.warn('Initial model request encountered error, retrying in 1.2s:', firstErr.message);
-        await new Promise(r => setTimeout(r, 1200));
-        response = await aiClient.models.generateContent({
-          model: aiModel,
-          contents: prompt,
-          config: {
-            responseMimeType: 'application/json',
-            temperature: 0.2,
-          }
-        });
-      }
+      // 8-second timeout guard to prevent Vercel 10s Hobby timeout (504 Gateway Timeout)
+      const TIMEOUT_MS = 8000;
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Gemma 4 generation timed out (>8s on serverless runtime)')), TIMEOUT_MS)
+      );
 
+      const generatePromise = aiClient.models.generateContent({
+        model: aiModel,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          temperature: 0.2,
+        }
+      });
+
+      const response: any = await Promise.race([generatePromise, timeoutPromise]);
       const responseText = response.text || '';
       const parsed = safeParseAndRepairJson(responseText);
       const validated = sanitizeResponse(parsed, roleTitle, companyName, aiModel);
 
       return res.status(200).json(validated);
     } catch (modelError: any) {
-      console.warn('Gemma 4 model call failed or returned malformed content. Falling back cleanly to deterministic telemetry:', modelError.message);
+      console.warn('Gemma 4 model call failed or timed out. Falling back to calibrated telemetry:', modelError.message);
       const fallbackResult = getDeterministicAnalysis(resumeText, jobDescription, roleTitle, companyName);
       fallbackResult.demo_notice = `API Notice: Gemma 4 request returned an error (${modelError.message}). Switched to calibrated fallback engine.`;
       return res.status(200).json(fallbackResult);
