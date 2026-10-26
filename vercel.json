@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "functions": {
+    "api/analyze.ts": {
+      "maxDuration": 30
+    }
+  }
+}

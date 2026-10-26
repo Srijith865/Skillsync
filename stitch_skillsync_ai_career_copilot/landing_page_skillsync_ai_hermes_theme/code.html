@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillSync AI — Your AI Career Copilot</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary": "#bfc2ff",
+          "primary-fixed-dim": "#bfc2ff",
+          "on-primary": "#0001ac",
+          "electric-blue": "#0000F2",
+          "ultramarine": "#1a36eb",
+          "cyber-cyan": "#38bdf8",
+          "phosphor-green": "#00FF88",
+          "surface-base": "#0A0A0C",
+          "terminal-black": "#050507",
+          "surface-raised": "#121216",
+          "surface-container": "#18181f",
+          "surface-container-high": "#20202a",
+          "border-subtle": "#1F2029",
+          "border-active": "#3B3D4D",
+          "outline-cyber": "#27272a",
+          "text-primary": "#ECEBE6",
+          "text-secondary": "#92929B",
+          "text-muted": "#555660",
+          "status-warning": "#FFB800",
+          "status-alert": "#ff5500",
+          "background": "#0A0A0C",
+          "on-surface": "#ECEBE6"
+        },
+        "fontFamily": {
+          "mono": ["JetBrains Mono", "monospace"],
+          "display": ["Space Grotesk", "sans-serif"],
+          "body": ["Inter", "sans-serif"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .bg-grid-cyber {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+  .ultramarine-glow {
+    background: radial-gradient(ellipse 70% 50% at 50% -15%, rgba(0, 0, 242, 0.42), rgba(26, 54, 235, 0.15) 50%, transparent 80%);
+  }
+  .corner-bracket {
+    position: relative;
+  }
+  .corner-bracket::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 6px;
+    height: 6px;
+    border-top: 1px solid #38bdf8;
+    border-left: 1px solid #38bdf8;
+  }
+  .corner-bracket::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 6px;
+    height: 6px;
+    border-bottom: 1px solid #38bdf8;
+    border-right: 1px solid #38bdf8;
+  }
+</style>
+</head>
+<body class="bg-[#0A0A0C] text-[#ECEBE6] font-body antialiased min-h-screen relative selection:bg-electric-blue selection:text-white bg-grid-cyber">
+<!-- Ultramarine Cyber Atmosphere Glow -->
+<div class="fixed inset-0 pointer-events-none ultramarine-glow z-0"></div>
+<!-- Top Navigation Bar (Hermes Minimalist Terminal Header) -->
+<header class="sticky top-0 z-50 bg-[#0A0A0C]/90 backdrop-blur-md border-b border-[#27272a]">
+<div class="flex justify-between items-center w-full px-6 max-w-7xl mx-auto h-16">
+<!-- Brand Logo / Monospace Badge -->
+<a class="flex items-center gap-3 group" href="#">
+<div class="h-8 w-8 rounded-none border border-cyber-cyan/50 bg-[#0000F2] flex items-center justify-center text-white shadow-[0_0_12px_rgba(0,0,242,0.8)]">
+<span class="material-symbols-outlined text-[18px]" data-icon="terminal">terminal</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-lg tracking-tight font-bold text-white uppercase">SkillSync <span class="text-cyber-cyan text-xs font-mono font-normal">v2.4_AI</span></span>
+</div>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-7 font-mono text-xs text-[#92929B] tracking-wider uppercase">
+<a class="hover:text-white transition-colors flex items-center gap-1" href="#features"><span class="text-cyber-cyan opacity-60">01.</span>Features</a>
+<a class="hover:text-white transition-colors flex items-center gap-1" href="#workflow"><span class="text-cyber-cyan opacity-60">02.</span>How it Works</a>
+<a class="hover:text-white transition-colors flex items-center gap-1" href="#stories"><span class="text-cyber-cyan opacity-60">03.</span>Stories</a>
+<a class="hover:text-white transition-colors flex items-center gap-1" href="#pricing"><span class="text-cyber-cyan opacity-60">04.</span>Pricing</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-3 font-mono text-xs">
+<a class="hidden sm:inline-flex text-[#92929B] hover:text-white px-3 py-1.5 uppercase tracking-wider transition-colors" href="#">Sign In</a>
+<a class="bg-[#0000F2] hover:bg-blue-600 text-white font-mono uppercase tracking-wider px-4 py-2 border border-cyber-cyan/60 flex items-center gap-2 shadow-[0_0_15px_rgba(0,0,242,0.5)] active:translate-y-px transition-all" href="#demo">
+<span>LAUNCH COPILOT</span>
+<span class="text-[10px] text-cyber-cyan font-bold">↵</span>
+</a>
+</div>
+</div>
+</header>
+<main class="relative z-10">
+<!-- Hero Section -->
+<section class="pt-16 pb-20 md:pt-24 md:pb-28 max-w-7xl mx-auto px-6">
+<div class="text-center max-w-4xl mx-auto flex flex-col items-center">
+<!-- Terminal Pill Eyebrow -->
+<div class="inline-flex items-center gap-2.5 px-3 py-1 bg-[#121216] border border-[#27272a] shadow-inner mb-8">
+<span class="flex h-1.5 w-1.5 rounded-full bg-phosphor-green animate-pulse"></span>
+<span class="font-mono text-[11px] text-cyber-cyan tracking-widest uppercase font-semibold">✦ AI CAREER COPILOT // AUTONOMOUS SYLLABUS MATCHER</span>
+<span class="font-mono text-[10px] text-[#555660] border-l border-[#27272a] pl-2 hidden sm:inline">SYS_STATUS: ACTIVE</span>
+</div>
+<!-- Dramatic Editorial Headline (Hermes Inspired) -->
+<h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white uppercase leading-[1.05] mb-6">
+  Your Skills. Your Future.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-cyber-cyan">Your Next Opportunity.</span>
+</h1>
+<!-- Subtitle in Mono-Accented Body -->
+<p class="font-mono text-xs sm:text-sm md:text-base text-[#92929B] max-w-2xl mb-8 leading-relaxed">
+  Bridge the gap between college coursework and real tech job descriptions. Instant match analysis, targeted skill gap detection, and personalized 30-day mastery roadmaps.
+</p>
+<!-- CTA Buttons & Command Toggle Bar -->
+<div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center mb-6">
+<button class="bg-[#0000F2] hover:bg-blue-600 text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 border border-cyber-cyan/50 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(0,0,242,0.6)] w-full sm:w-auto transition-all active:scale-[0.99]">
+<span class="font-semibold">Get Started Free</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="bg-[#121216] text-[#ECEBE6] border border-[#27272a] hover:border-cyber-cyan/50 font-mono text-xs uppercase tracking-wider px-6 py-3.5 flex items-center justify-center gap-2 hover:bg-[#18181f] transition-all w-full sm:w-auto">
+<span class="material-symbols-outlined text-cyber-cyan text-[18px]" data-icon="play_circle">play_circle</span>
+<span>View Live Demo</span>
+</button>
+</div>
+<!-- Hermes Style Quick-Install / CLI Pill Toggle Bar -->
+<div class="max-w-md w-full bg-[#050507] border border-[#27272a] p-1.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between text-left gap-2 mb-16 font-mono text-[11px]">
+<div class="flex items-center gap-1 border-b sm:border-b-0 sm:border-r border-[#27272a] pr-2 pb-1 sm:pb-0">
+<span class="px-2 py-0.5 bg-[#0000F2]/40 text-cyber-cyan border border-cyber-cyan/30 font-semibold uppercase text-[10px]">macOS</span>
+<span class="px-2 py-0.5 text-[#555660] hover:text-[#92929B] uppercase text-[10px] cursor-pointer">Linux</span>
+<span class="px-2 py-0.5 text-[#555660] hover:text-[#92929B] uppercase text-[10px] cursor-pointer">Windows</span>
+</div>
+<div class="flex items-center justify-between flex-1 pl-1 text-[#92929B] overflow-hidden">
+<span class="truncate font-mono text-[#38bdf8] select-all">curl -fsSL skillsync.ai/install.sh | bash</span>
+<button class="text-[#555660] hover:text-white px-1.5" title="Copy to clipboard">
+<span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Hero Mockup Card (Hermes Cyber Console) -->
+<div class="max-w-4xl mx-auto rounded-none bg-[#0e0e12] p-5 sm:p-7 border border-[#27272a] shadow-[0_0_35px_rgba(0,0,0,0.8)] relative corner-bracket" id="demo">
+<!-- Technical Window Bar -->
+<div class="flex items-center justify-between border-b border-[#27272a] pb-4 mb-5 font-mono">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 bg-red-500/80"></span>
+<span class="w-2.5 h-2.5 bg-yellow-500/80"></span>
+<span class="w-2.5 h-2.5 bg-emerald-500/80"></span>
+<span class="text-[11px] text-[#555660] ml-2 tracking-widest uppercase hidden sm:inline">CONSOLE // TELEMETRY_STREAM_V2</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#0000F2]/20 border border-cyber-cyan/40 text-cyber-cyan text-[10px] tracking-widest font-semibold uppercase">
+<span class="material-symbols-outlined text-[13px] text-phosphor-green" data-icon="bolt">bolt</span>
+<span>SYNCHRONIZED ATS CHECK</span>
+</div>
+</div>
+<!-- Inner Split Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+<!-- Left: Candidate Target Spec -->
+<div class="md:col-span-7 bg-[#121216] p-5 border border-[#1F2029] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between mb-4 border-b border-[#1F2029] pb-3">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 bg-[#050507] border border-[#27272a] flex items-center justify-center text-cyber-cyan">
+<span class="material-symbols-outlined text-[20px]" data-icon="terminal">terminal</span>
+</div>
+<div>
+<h3 class="font-display text-base text-white font-bold tracking-tight">Software Engineer Intern</h3>
+<p class="font-mono text-xs text-[#92929B]">Figma • San Francisco, CA (Hybrid)</p>
+</div>
+</div>
+<span class="border border-[#27272a] bg-[#050507] px-2 py-0.5 text-[10px] font-mono text-cyber-cyan uppercase font-semibold">Summer 2025</span>
+</div>
+<!-- Matching Skills Segment -->
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2 font-mono text-[11px]">
+<span class="text-[#92929B] uppercase tracking-wider">Matching Skills (Coursework &amp; Projects)</span>
+<span class="text-phosphor-green font-semibold">6 Verified</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 bg-[#050507] text-[#ECEBE6] text-[11px] font-mono border border-[#27272a] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-phosphor-green" data-icon="check">check</span> TypeScript
+</span>
+<span class="px-2 py-1 bg-[#050507] text-[#ECEBE6] text-[11px] font-mono border border-[#27272a] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-phosphor-green" data-icon="check">check</span> React &amp; Hooks
+</span>
+<span class="px-2 py-1 bg-[#050507] text-[#ECEBE6] text-[11px] font-mono border border-[#27272a] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-phosphor-green" data-icon="check">check</span> WebAssembly (CS 162)
+</span>
+<span class="px-2 py-1 bg-[#050507] text-[#ECEBE6] text-[11px] font-mono border border-[#27272a] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-phosphor-green" data-icon="check">check</span> Git Workflow
+</span>
+<span class="px-2 py-1 bg-[#050507] text-[#ECEBE6] text-[11px] font-mono border border-[#27272a] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-phosphor-green" data-icon="check">check</span> REST APIs
+</span>
+</div>
+</div>
+<!-- High Impact Gaps -->
+<div>
+<div class="flex items-center justify-between mb-2 font-mono text-[11px]">
+<span class="text-status-alert uppercase tracking-wider font-semibold">Identified Syllabus Gaps</span>
+<span class="text-status-alert font-mono">2 Recommended</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 bg-[#ff5500]/10 text-orange-200 text-[11px] font-mono border border-[#ff5500]/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-status-alert" data-icon="priority_high">priority_high</span> WebGL / Canvas Rendering
+</span>
+<span class="px-2 py-1 bg-[#ff5500]/10 text-orange-200 text-[11px] font-mono border border-[#ff5500]/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-status-alert" data-icon="priority_high">priority_high</span> Collaborative CRDTs
+</span>
+</div>
+</div>
+</div>
+<!-- Action Diff Prompt Snippet -->
+<div class="mt-5 pt-3 border-t border-[#1F2029] flex items-center justify-between font-mono text-[11px]">
+<span class="text-[#92929B] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-cyber-cyan" data-icon="auto_awesome">auto_awesome</span>
+Resume tuned for Figma Core Engine team
+</span>
+<a class="text-cyber-cyan hover:underline flex items-center gap-1" href="#">Inspect Diff <span class="text-xs">→</span></a>
+</div>
+</div>
+<!-- Right: Live Score & Target Radar -->
+<div class="md:col-span-5 bg-[#121216] p-5 border border-[#1F2029] flex flex-col justify-between">
+<div>
+<span class="font-mono text-[10px] text-[#92929B] uppercase tracking-widest block mb-1">ATS PROBABILITY RATING</span>
+<div class="flex items-baseline gap-2 mb-3">
+<span class="text-4xl font-display text-white font-bold tracking-tight">84%</span>
+<span class="text-xs font-mono text-phosphor-green font-semibold">+18% vs unoptimized draft</span>
+</div>
+<!-- Progress Meter -->
+<div class="w-full bg-[#050507] h-2 border border-[#27272a] mb-6 overflow-hidden">
+<div class="bg-gradient-to-r from-[#0000F2] via-blue-500 to-cyber-cyan h-full" style="width: 84%;"></div>
+</div>
+<!-- Micro Next Steps Recommendation -->
+<div class="p-3 bg-[#050507] border border-[#27272a] space-y-2 mb-4">
+<div class="flex items-center gap-2 font-mono text-xs text-white font-semibold uppercase">
+<span class="material-symbols-outlined text-[15px] text-cyber-cyan" data-icon="school">school</span>
+<span>Recommended 7-Day Sprint:</span>
+</div>
+<p class="font-mono text-xs text-[#92929B] leading-relaxed">
+Build a mini 2D interactive canvas project in WebGL to cover the core missing metric before Figma's final hiring wave.
+</p>
+</div>
+</div>
+<button class="w-full py-2.5 px-4 bg-[#0000F2] hover:bg-blue-600 border border-cyber-cyan/50 text-white font-mono text-xs uppercase tracking-wider font-semibold transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,0,242,0.4)]">
+<span class="material-symbols-outlined text-[16px]" data-icon="play_arrow">play_arrow</span>
+<span>Generate 30-Day Sprint Roadmap</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust & University Stats Bar (Monochrome Hermes Style) -->
+<section class="py-8 border-y border-[#27272a] bg-[#050507]">
+<div class="max-w-7xl mx-auto px-6">
+<p class="text-center font-mono text-[11px] uppercase text-[#555660] font-semibold tracking-widest mb-5">
+// Empowering ambitious students &amp; new grads across top universities
+</p>
+<div class="flex flex-wrap items-center justify-center gap-8 md:gap-14 text-[#92929B] font-display text-sm md:text-base uppercase tracking-wider font-semibold">
+<span class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px] text-cyber-cyan" data-icon="account_balance">account_balance</span>
+Stanford
+</span>
+<span class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px] text-cyber-cyan" data-icon="school">school</span>
+UC Berkeley
+</span>
+<span class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px] text-cyber-cyan" data-icon="hub">hub</span>
+MIT
+</span>
+<span class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px] text-cyber-cyan" data-icon="architecture">architecture</span>
+Georgia Tech
+</span>
+<span class="flex items-center gap-2 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px] text-cyber-cyan" data-icon="biotech">biotech</span>
+Carnegie Mellon
+</span>
+</div>
+</div>
+</section>
+<!-- Feature Cards Grid (Etched Cyber Blueprint Cards) -->
+<section class="py-24 max-w-7xl mx-auto px-6" id="features">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="font-mono text-xs text-cyber-cyan uppercase font-bold tracking-widest block mb-2">// INTELLIGENT ARCHITECTURE</span>
+<h2 class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tight mb-4">Precision Career Intelligence</h2>
+<p class="font-mono text-xs md:text-sm text-[#92929B]">
+Ditch generic resume advice. SkillSync AI compares your direct academic history against modern production engineering standards.
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Feature 1: ATS & Role Gap Engine -->
+<div class="bg-[#0e0e12] p-7 border border-[#27272a] hover:border-cyber-cyan/50 flex flex-col justify-between transition-all group corner-bracket">
+<div>
+<div class="h-10 w-10 border border-[#27272a] bg-[#050507] text-cyber-cyan flex items-center justify-center mb-6 shadow-[0_0_10px_rgba(56,189,248,0.2)]">
+<span class="material-symbols-outlined text-[22px]" data-icon="analytics">analytics</span>
+</div>
+<span class="font-mono text-[10px] text-[#555660] uppercase block mb-1">MODULE // 01</span>
+<h3 class="font-display text-lg text-white font-bold uppercase tracking-tight mb-3">Precision ATS &amp; Role Gap Engine</h3>
+<p class="font-mono text-xs text-[#92929B] mb-6 leading-relaxed">
+Semantic parsing decodes candidate profiles against target job requirements, revealing unseen resume mismatches and keywords.
+</p>
+<!-- Mini Widget -->
+<div class="bg-[#050507] p-3.5 border border-[#1F2029] mb-4 space-y-2.5 font-mono">
+<div class="flex justify-between items-center text-[11px]">
+<span class="text-[#ECEBE6]">Distributed Systems Match</span>
+<span class="text-phosphor-green font-semibold">92%</span>
+</div>
+<div class="w-full bg-[#18181f] h-1.5 overflow-hidden">
+<div class="bg-phosphor-green h-full" style="width: 92%;"></div>
+</div>
+<div class="flex justify-between items-center text-[11px]">
+<span class="text-[#ECEBE6]">Cloud Infrastructure (K8s)</span>
+<span class="text-status-alert font-semibold">41% Gap</span>
+</div>
+<div class="w-full bg-[#18181f] h-1.5 overflow-hidden">
+<div class="bg-status-alert h-full" style="width: 41%;"></div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-[#1F2029] flex items-center gap-2 text-cyber-cyan font-mono text-xs uppercase tracking-wider group-hover:underline">
+<span>Explore Gap Telemetry</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 2: 30-Day Personalized Roadmaps -->
+<div class="bg-[#0e0e12] p-7 border border-[#27272a] hover:border-cyber-cyan/50 flex flex-col justify-between transition-all group corner-bracket">
+<div>
+<div class="h-10 w-10 border border-[#27272a] bg-[#050507] text-[#0000F2] flex items-center justify-center mb-6 shadow-[0_0_10px_rgba(0,0,242,0.4)]">
+<span class="material-symbols-outlined text-[22px] text-blue-400" data-icon="map">map</span>
+</div>
+<span class="font-mono text-[10px] text-[#555660] uppercase block mb-1">MODULE // 02</span>
+<h3 class="font-display text-lg text-white font-bold uppercase tracking-tight mb-3">30-Day Personalized Roadmaps</h3>
+<p class="font-mono text-xs text-[#92929B] mb-6 leading-relaxed">
+Converts missing skills into bite-sized weekend projects and micro-curriculums specifically tuned to fill resume voids before deadlines.
+</p>
+<!-- Mini Sprint Preview -->
+<div class="bg-[#050507] p-3.5 border border-[#1F2029] mb-4 space-y-2 font-mono text-[11px]">
+<div class="flex items-center gap-2 text-[#ECEBE6]">
+<span class="w-4 h-4 bg-[#0000F2] text-white flex items-center justify-center text-[10px] font-bold">1</span>
+<span class="font-semibold text-cyber-cyan">Week 1: Async Worker Queues</span>
+</div>
+<div class="flex items-center gap-2 text-[#92929B]">
+<span class="w-4 h-4 bg-[#18181f] text-[#555660] flex items-center justify-center text-[10px] font-bold">2</span>
+<span>Week 2: Dockerizing Go Microservices</span>
+</div>
+<div class="flex items-center gap-2 text-[#92929B]">
+<span class="w-4 h-4 bg-[#18181f] text-[#555660] flex items-center justify-center text-[10px] font-bold">3</span>
+<span>Week 3: Production Redis Caching</span>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-[#1F2029] flex items-center gap-2 text-cyber-cyan font-mono text-xs uppercase tracking-wider group-hover:underline">
+<span>View Syllabus Engine</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 3: AI Mock Interview Trainer -->
+<div class="bg-[#0e0e12] p-7 border border-[#27272a] hover:border-cyber-cyan/50 flex flex-col justify-between transition-all group corner-bracket">
+<div>
+<div class="h-10 w-10 border border-[#27272a] bg-[#050507] text-phosphor-green flex items-center justify-center mb-6 shadow-[0_0_10px_rgba(0,255,136,0.3)]">
+<span class="material-symbols-outlined text-[22px]" data-icon="mic">mic</span>
+</div>
+<span class="font-mono text-[10px] text-[#555660] uppercase block mb-1">MODULE // 03</span>
+<h3 class="font-display text-lg text-white font-bold uppercase tracking-tight mb-3">AI Mock Interview Trainer</h3>
+<p class="font-mono text-xs text-[#92929B] mb-6 leading-relaxed">
+Simulate technical screens with an adaptive interviewer trained on verified questions asked at Google, Stripe, and Apple.
+</p>
+<!-- Mini Audio / Interview Preview -->
+<div class="bg-[#050507] p-3.5 border border-[#1F2029] mb-4 font-mono">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] text-phosphor-green font-semibold uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] animate-pulse" data-icon="graphic_eq">graphic_eq</span>
+SIMULATION ACTIVE
+</span>
+<span class="text-[10px] text-[#555660]">02:45 / 15:00</span>
+</div>
+<p class="text-[11px] text-[#ECEBE6] italic bg-[#121216] p-2 border border-[#27272a]">
+“Explain how you would design rate limiting for a distributed webhook service.”
+</p>
+</div>
+</div>
+<div class="pt-4 border-t border-[#1F2029] flex items-center gap-2 text-cyber-cyan font-mono text-xs uppercase tracking-wider group-hover:underline">
+<span>Start Practice Simulator</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Section: From Dorm Room to Dream Offer -->
+<section class="py-24 bg-[#050507] border-y border-[#27272a]" id="workflow">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="font-mono text-xs text-cyber-cyan uppercase font-bold tracking-widest block mb-2">// THE ACCELERATION PIPELINE</span>
+<h2 class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tight mb-4">From Dorm Room to Dream Offer in 3 Steps</h2>
+<p class="font-mono text-xs md:text-sm text-[#92929B]">
+Transform ambiguous recruitment cycles into an engineered, milestone-driven preparation loop.
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+<!-- Step 1 -->
+<div class="relative bg-[#0e0e12] p-8 border border-[#27272a] corner-bracket flex flex-col justify-between">
+<div>
+<div class="w-8 h-8 bg-[#0000F2] text-white flex items-center justify-center font-mono font-bold text-sm mb-6 border border-cyber-cyan/50">
+01
+</div>
+<h3 class="font-display text-lg text-white font-bold uppercase tracking-tight mb-3">Sync Coursework &amp; Target Roles</h3>
+<p class="font-mono text-xs text-[#92929B] leading-relaxed">
+Upload your GitHub, unofficial transcript, and job postings. Our parsing engine extracts exact technical expectations.
+</p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#1F2029] text-[10px] font-mono text-[#555660] uppercase">
+STATUS: PARSE_READY
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative bg-[#0e0e12] p-8 border border-[#27272a] corner-bracket flex flex-col justify-between">
+<div>
+<div class="w-8 h-8 bg-[#0000F2] text-white flex items-center justify-center font-mono font-bold text-sm mb-6 border border-cyber-cyan/50">
+02
+</div>
+<h3 class="font-display text-lg text-white font-bold uppercase tracking-tight mb-3">Close Syllabus Gaps with Roadmaps</h3>
+<p class="font-mono text-xs text-[#92929B] leading-relaxed">
+Follow tailored, milestone-based tutorials and real production repos designed specifically to turn resume weaknesses into standout answers.
+</p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#1F2029] text-[10px] font-mono text-[#555660] uppercase">
+STATUS: SPRINT_SYNCHRONIZED
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative bg-[#0e0e12] p-8 border border-[#27272a] corner-bracket flex flex-col justify-between">
+<div>
+<div class="w-8 h-8 bg-[#0000F2] text-white flex items-center justify-center font-mono font-bold text-sm mb-6 border border-cyber-cyan/50">
+03
+</div>
+<h3 class="font-display text-lg text-white font-bold uppercase tracking-tight mb-3">Ace Interviews with Voice AI</h3>
+<p class="font-mono text-xs text-[#92929B] leading-relaxed">
+Rehearse behavioral storytelling and deep technical drills with tailored feedback metrics on communication speed and clarity.
+</p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#1F2029] text-[10px] font-mono text-[#555660] uppercase">
+STATUS: BENCHMARK_EVAL
+</div>
+</div>
+</div>
+<!-- Social Proof Banner inside Workflow (Hermes Quote Card) -->
+<div class="mt-12 bg-[#0e0e12] p-6 md:p-8 border border-[#27272a] flex flex-col md:flex-row items-center justify-between gap-6" id="stories">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-[#050507] border border-cyber-cyan/50 flex items-center justify-center text-cyber-cyan shrink-0">
+<span class="material-symbols-outlined text-[24px]" data-icon="verified">verified</span>
+</div>
+<div>
+<p class="font-display text-base md:text-lg text-white font-medium mb-1">
+“SkillSync gave me the missing AWS and microservices project that finally got me an offer at Datadog.”
+</p>
+<p class="font-mono text-xs text-[#92929B]">
+Sarah K., UC Berkeley ’24 • Incoming SWE at Datadog
+</p>
+</div>
+</div>
+<a class="bg-[#121216] hover:bg-[#18181f] text-cyber-cyan border border-cyber-cyan/50 font-mono text-xs uppercase tracking-wider px-5 py-3 whitespace-nowrap active:scale-[0.98] transition-all" href="#">
+Read Student Stories
+</a>
+</div>
+</div>
+</section>
+<!-- Pricing / Final CTA Section (Hermes Monolith Portal) -->
+<section class="py-24 max-w-7xl mx-auto px-6 text-center" id="pricing">
+<div class="max-w-4xl mx-auto bg-[#050507] p-8 md:p-14 border border-[#27272a] relative overflow-hidden corner-bracket">
+<div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_rgba(0,0,242,0.25)_0%,_transparent_70%)]"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="h-10 w-10 bg-[#0000F2] border border-cyber-cyan text-white flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(0,0,242,0.7)]">
+<span class="material-symbols-outlined text-[20px]" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<span class="font-mono text-xs text-cyber-cyan uppercase tracking-widest font-bold mb-2">// COMMENCE DEPLOYMENT</span>
+<h2 class="font-display text-3xl md:text-5xl text-white font-bold uppercase tracking-tight mb-4">
+Accelerate your tech career this semester
+</h2>
+<p class="font-mono text-xs md:text-sm text-[#92929B] max-w-xl mb-8 leading-relaxed">
+Start with unlimited match analyses and your first 30-day learning roadmap today. Free for students with an active .edu email.
+</p>
+<div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+<button class="bg-[#0000F2] hover:bg-blue-600 text-white font-mono text-xs uppercase tracking-wider px-8 py-4 border border-cyber-cyan/60 flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(0,0,242,0.6)] active:scale-[0.98] transition-transform w-full sm:w-auto">
+<span class="font-bold">Sign Up with .edu Email</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<span class="font-mono text-[11px] text-[#555660] mt-4 uppercase tracking-wider">No credit card required • 100% Student Free Tier</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Hermes Terminal-Style Footer -->
+<footer class="border-t border-[#27272a] bg-[#050507] py-10 font-mono text-xs">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-3">
+<div class="h-6 w-6 bg-[#0000F2] border border-cyber-cyan/50 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[14px]" data-icon="terminal">terminal</span>
+</div>
+<span class="font-display text-sm text-white font-bold uppercase tracking-tight">SkillSync AI</span>
+<span class="text-[11px] text-[#555660] ml-2">© 2025 SkillSync AI Inc. All rights reserved.</span>
+</div>
+<div class="flex items-center gap-6 uppercase tracking-wider text-[#92929B]">
+<a class="hover:text-cyber-cyan transition-colors" href="#features">Features</a>
+<a class="hover:text-cyber-cyan transition-colors" href="#workflow">How it Works</a>
+<a class="hover:text-cyber-cyan transition-colors" href="#stories">Success Stories</a>
+<a class="hover:text-cyber-cyan transition-colors" href="#pricing">Pricing</a>
+<a class="hover:text-cyber-cyan transition-colors" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

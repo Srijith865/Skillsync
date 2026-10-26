@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillSync AI - Resume &amp; Job Match Analysis // Hermes Terminal</title>
+<!-- Google Fonts: Space Grotesk & JetBrains Mono & Space Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary-fixed-dim": "#bfc2ff",
+          "on-primary": "#0001ac",
+          "on-secondary-fixed": "#390c00",
+          "border-active": "#3B3D4D",
+          "on-error": "#690005",
+          "text-muted": "#555660",
+          "status-warning": "#FFB800",
+          "tertiary": "#00e479",
+          "surface-overlay": "#181820",
+          "tertiary-container": "#005328",
+          "text-primary": "#ECEBE6",
+          "surface-bright": "#39393b",
+          "primary-container": "#0000f2",
+          "on-primary-fixed-variant": "#0000ef",
+          "primary": "#bfc2ff",
+          "error-container": "#93000a",
+          "on-tertiary-fixed-variant": "#005228",
+          "primary-fixed": "#e0e0ff",
+          "surface-raised": "#121216",
+          "surface": "#131315",
+          "tertiary-fixed": "#60ff99",
+          "on-tertiary-fixed": "#00210c",
+          "error": "#ffb4ab",
+          "inverse-on-surface": "#313032",
+          "secondary-container": "#ff5708",
+          "on-surface": "#e5e1e4",
+          "surface-container-highest": "#353437",
+          "text-secondary": "#92929B",
+          "on-tertiary-container": "#00d16e",
+          "outline-variant": "#454557",
+          "on-error-container": "#ffdad6",
+          "terminal-black": "#050507",
+          "surface-container-lowest": "#0e0e10",
+          "secondary-fixed": "#ffdbcf",
+          "surface-container-high": "#2a2a2c",
+          "on-secondary": "#5c1900",
+          "on-surface-variant": "#c5c4da",
+          "inverse-surface": "#e5e1e4",
+          "surface-base": "#0A0A0C",
+          "on-background": "#e5e1e4",
+          "phosphor-green": "#00FF88",
+          "on-secondary-container": "#511500",
+          "border-subtle": "#1F2029",
+          "surface-container": "#201f21",
+          "inverse-primary": "#343dff",
+          "on-primary-container": "#abb0ff",
+          "surface-dim": "#131315",
+          "electric-blue": "#0000F2",
+          "on-secondary-fixed-variant": "#822700",
+          "tertiary-fixed-dim": "#00e479",
+          "outline": "#8f8fa3",
+          "background": "#070709",
+          "secondary-fixed-dim": "#ffb59c",
+          "surface-container-low": "#1c1b1d",
+          "cyber-amber": "#FF5500",
+          "on-tertiary": "#003919",
+          "surface-tint": "#bfc2ff",
+          "surface-variant": "#353437",
+          "secondary": "#ffb59c",
+          "on-primary-fixed": "#00006e"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.375rem",
+          "full": "0.5rem"
+        },
+        "fontFamily": {
+          "sans": ["Space Grotesk", "sans-serif"],
+          "mono": ["JetBrains Mono", "monospace"],
+          "display": ["Space Grotesk", "sans-serif"],
+          "body": ["Space Mono", "monospace"]
+        }
+      },
+    },
+  }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Hermes terminal scanline & subtle blueprint grid */
+    .terminal-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+    .hermes-glow-blue {
+      box-shadow: 0 0 20px -3px rgba(0, 0, 242, 0.35);
+    }
+    .cyber-border {
+      border: 1px solid #1F2029;
+    }
+    .cyber-border:hover {
+      border-color: #3B3D4D;
+    }
+    /* Line numbers counter styling */
+    .code-editor-gutter {
+      counter-reset: line;
+    }
+    .code-line::before {
+      counter-increment: line;
+      content: counter(line);
+      display: inline-block;
+      width: 2rem;
+      padding-right: 0.75rem;
+      text-align: right;
+      color: #555660;
+      user-select: none;
+    }
+    /* Custom scrollbar for terminal elements */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0A0A0C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F2029;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3B3D4D;
+    }
+</style>
+</head>
+<body class="bg-background text-text-primary antialiased min-h-screen flex flex-col font-mono selection:bg-electric-blue selection:text-white terminal-grid">
+<!-- ================= TOP APP BAR (Hermes Agent Style) ================= -->
+<header class="docked full-width top-0 sticky z-50 bg-[#0A0A0C]/90 backdrop-blur-md border-b border-border-subtle">
+<div class="flex justify-between items-center w-full px-5 max-w-7xl mx-auto h-14">
+<!-- Brand & Logo -->
+<div class="flex items-center gap-6">
+<a class="flex items-center gap-2.5 group" href="#">
+<div class="w-7 h-7 bg-electric-blue text-white flex items-center justify-center font-bold text-xs tracking-wider rounded-sm hermes-glow-blue">
+          H
+        </div>
+<div class="flex items-baseline gap-1.5">
+<span class="font-sans font-bold text-[15px] tracking-tight text-white uppercase">SkillSync</span>
+<span class="text-[10px] font-mono text-electric-blue uppercase tracking-widest font-semibold px-1 py-0.5 bg-electric-blue/10 border border-electric-blue/30 rounded-sm">Agent v2.4</span>
+</div>
+</a>
+<!-- Desktop Navigation Tabs -->
+<nav class="hidden md:flex items-center gap-1 font-mono text-xs">
+<a class="text-text-muted hover:text-text-primary px-3 py-1.5 transition-colors border border-transparent hover:border-border-subtle rounded-sm" href="#">
+          [01] Dashboard
+        </a>
+<a class="text-white font-medium bg-surface-raised px-3 py-1.5 border border-border-active rounded-sm flex items-center gap-1.5" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-phosphor-green animate-pulse"></span>
+          [02] Match_Analysis
+        </a>
+<a class="text-text-muted hover:text-text-primary px-3 py-1.5 transition-colors border border-transparent hover:border-border-subtle rounded-sm" href="#">
+          [03] Roadmap
+        </a>
+<a class="text-text-muted hover:text-text-primary px-3 py-1.5 transition-colors border border-transparent hover:border-border-subtle rounded-sm" href="#">
+          [04] Prep_REPL
+        </a>
+</nav>
+</div>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-2.5 font-mono text-xs">
+<div class="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-surface-raised border border-border-subtle rounded-sm text-[11px] text-text-secondary">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-phosphor-green"></span>
+<span>HERMES_RUNTIME: READY</span>
+</div>
+<!-- Copilot Status -->
+<button aria-label="SkillSync Copilot Status" class="p-1.5 rounded-sm text-text-secondary hover:text-white hover:bg-surface-raised border border-transparent hover:border-border-subtle transition-all" title="Kernel Active" type="button">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+<!-- Notifications -->
+<button aria-label="Notifications" class="p-1.5 rounded-sm text-text-secondary hover:text-white hover:bg-surface-raised border border-transparent hover:border-border-subtle transition-all relative" type="button">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-electric-blue"></span>
+</button>
+<div class="h-4 w-px bg-border-subtle mx-0.5 hidden sm:block"></div>
+<!-- Action Button -->
+<button class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-surface-raised hover:bg-surface-overlay text-white font-mono text-xs transition-colors border border-border-active active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[14px] text-electric-blue">add</span>
+<span>New Job Spec</span>
+</button>
+<!-- Profile Avatar -->
+<div class="relative ml-1">
+<img alt="Student Profile Avatar" class="w-7 h-7 rounded-sm border border-border-active object-cover ring-1 ring-border-subtle" data-alt="A clean modern digital avatar photo of an ambitious computer science university student with neat hair and friendly posture, bathed in soft studio illumination against an ultra-subtle lavender background reflecting clean aesthetic tech professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdX2uBjmqN8VXVJaVWYAknm6UgOumg-mwwLri_pwzaUc-eKbWCGuutuWc1c4MzFYDfF-IN_rJFBJD-ZDVAfMI7lEBwjem19M3HxCgPZaDMvBLQDb4cNNKVUnBrD_i8j34MUtuoqI9GJ6ZmtI9FHwKLKfypw1eAvFRLcQIp_TijtoRs0iwhttA0hymXBzu3TntXo3TmaO12P6bM1T1ZdHZlS2jIe7NRkZg_pwz9mlgEJG4v970jufoK"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-phosphor-green border border-terminal-black"></span>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE CANVAS ================= -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 font-mono">
+<!-- Page Header Section with Hermes Terminal Flair -->
+<div class="mb-6 pb-5 border-b border-border-subtle flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-2 font-mono text-[11px]">
+<span class="px-2 py-0.5 rounded-sm bg-electric-blue/15 border border-electric-blue/40 text-primary font-medium tracking-wider">
+          CORE // ATS_INSPECTOR_V2.4
+        </span>
+<span class="text-text-muted">//</span>
+<span class="text-text-secondary flex items-center gap-1">
+<span class="text-phosphor-green font-bold">●</span>
+<span>PIPELINE: STANDBY (TARGETING RECEPTIVE FIT)</span>
+</span>
+</div>
+<h1 class="font-sans font-bold text-2xl sm:text-3xl text-white tracking-tight flex items-center gap-3">
+<span>RESUME_ANALYSIS_WORKSPACE</span>
+<span class="text-xs font-mono font-normal text-text-muted px-2 py-0.5 border border-border-subtle bg-surface-raised rounded-sm hidden sm:inline-block">ENV: PRODUCTION</span>
+</h1>
+<p class="text-xs sm:text-sm text-text-secondary mt-1 font-mono max-w-3xl">
+        &gt; Ingest candidate telemetry and parse target requisition to calibrate alignment, vector distance, and syntax anomalies.
+      </p>
+</div>
+<!-- Quick terminal status pill -->
+<div class="flex items-center gap-3 text-xs bg-surface-raised border border-border-subtle px-3 py-2 rounded-sm self-start md:self-auto">
+<div>
+<span class="text-text-muted block text-[10px]">ENGINE STATUS</span>
+<span class="text-phosphor-green font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-phosphor-green"></span>
+          NOUS_HERMES_ACTIVE
+        </span>
+</div>
+<div class="h-6 w-px bg-border-subtle"></div>
+<div>
+<span class="text-text-muted block text-[10px]">INFERENCE</span>
+<span class="text-white">QUANTIZED 8-BIT</span>
+</div>
+</div>
+</div>
+<!-- Dual Column Responsive Input Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+<!-- ================= LEFT COLUMN: Resume Source (5 Cols) ================= -->
+<section class="lg:col-span-5 flex flex-col gap-4">
+<div class="bg-surface-raised rounded-sm border border-border-subtle p-4 shadow-xl relative overflow-hidden">
+<!-- Terminal header line -->
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<div class="flex gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#3B3D4D]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#3B3D4D]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#3B3D4D]"></span>
+</div>
+<span class="text-xs text-text-muted font-mono ml-2">SRC:IN_STREAM://01</span>
+</div>
+<!-- Quick sample loader trigger -->
+<button class="text-xs text-primary hover:text-white font-mono flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface-overlay hover:bg-surface border border-border-subtle transition-all" id="sample-resume-btn" type="button">
+<span class="material-symbols-outlined text-[13px]">input</span>
+<span>Load CS_Junior.pdf</span>
+</button>
+</div>
+<!-- Section Title & Meta -->
+<div class="flex items-center justify-between mb-3">
+<div>
+<h2 class="font-sans font-semibold text-sm text-white tracking-wide flex items-center gap-2">
+<span class="text-electric-blue font-mono">[01]</span>
+<span>RESUME INGESTION ENGINE</span>
+</h2>
+<p class="text-[11px] text-text-muted mt-0.5">PDF bytecode &amp; token extraction module</p>
+</div>
+<span class="text-[10px] px-1.5 py-0.5 bg-surface-overlay text-text-secondary border border-border-subtle rounded-sm">MEM_INSPECTED</span>
+</div>
+<!-- Active Upload State Showcase Card -->
+<div class="mb-3 rounded-sm border border-border-active bg-terminal-black p-3.5 relative group">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<!-- PDF Miniature Icon Preview with Cyber styling -->
+<div class="w-10 h-12 rounded-sm bg-surface-raised border border-border-subtle flex flex-col items-center justify-center flex-shrink-0 relative">
+<div class="w-full h-1 bg-electric-blue absolute top-0"></div>
+<span class="material-symbols-outlined text-electric-blue text-[20px] mt-1">description</span>
+<span class="text-[8px] font-mono text-text-muted font-bold tracking-wider">PDF</span>
+</div>
+<!-- File details -->
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="text-xs text-text-primary font-medium truncate font-mono" title="Alex_Chen_CS_Resume_2025.pdf">
+                    Alex_Chen_CS_Resume_2025.pdf
+                  </span>
+<span class="material-symbols-outlined text-phosphor-green text-[15px]" title="Validated">check_circle</span>
+</div>
+<p class="text-[11px] text-text-muted font-mono mt-0.5">184 KB • SHA256: d9b7a...f02</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-1.5 py-0.2 rounded-sm text-[10px] font-mono bg-phosphor-green/10 text-phosphor-green border border-phosphor-green/30">
+                    STATUS: INDEXED
+                  </span>
+<span class="text-text-muted text-[10px]">•</span>
+<span class="text-[10px] text-text-secondary font-mono">3 Projects // 1 Internship</span>
+</div>
+</div>
+</div>
+<!-- Replace Action Button -->
+<button class="text-text-secondary hover:text-white text-xs px-2 py-1 rounded-sm border border-border-subtle hover:border-border-active bg-surface-raised transition-all flex items-center gap-1 flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-[13px]">swap_horiz</span>
+<span>Replace</span>
+</button>
+</div>
+</div>
+<!-- Terminal File-Drop / Ingestion Box -->
+<div class="group relative rounded-sm border border-dashed border-border-subtle hover:border-electric-blue bg-terminal-black/70 hover:bg-terminal-black p-5 text-center cursor-pointer transition-all">
+<input accept=".pdf" aria-label="Upload resume PDF" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" type="file"/>
+<div class="flex flex-col items-center justify-center pointer-events-none">
+<div class="w-10 h-10 rounded-sm bg-surface-raised border border-border-subtle flex items-center justify-center text-electric-blue group-hover:scale-105 group-hover:border-electric-blue transition-all mb-2.5">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+</div>
+<p class="text-xs text-text-primary font-medium font-mono">
+              &gt; DRAG &amp; DROP RESUME_STREAM [.PDF]
+            </p>
+<p class="text-[11px] text-text-muted mt-1 font-mono">
+              MAX: 10MB • UTF-8 / OCR TOKEN PARSE
+            </p>
+<div class="mt-2.5 flex items-center gap-1.5 text-text-muted text-[10px] font-mono">
+<span class="material-symbols-outlined text-[12px] text-text-muted">encrypted</span>
+<span>Zero external egress. Parsed in ephemeral sandbox memory.</span>
+</div>
+</div>
+</div>
+<!-- Resume Telemetry Quick Preview Drawer -->
+<div class="mt-3.5 pt-3.5 border-t border-border-subtle font-mono">
+<div class="flex items-center justify-between text-[11px] text-text-muted mb-2">
+<span class="uppercase tracking-wider text-text-muted">INFERRED_ARCHETYPE:</span>
+<span class="text-electric-blue font-medium">B.S. CS / Distributed Systems</span>
+</div>
+<!-- Delta Skill Pills extracted -->
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded-sm bg-surface-overlay border border-border-subtle text-text-primary text-[10px]">Go</span>
+<span class="px-1.5 py-0.5 rounded-sm bg-surface-overlay border border-border-subtle text-text-primary text-[10px]">Python</span>
+<span class="px-1.5 py-0.5 rounded-sm bg-surface-overlay border border-border-subtle text-text-primary text-[10px]">Docker</span>
+<span class="px-1.5 py-0.5 rounded-sm bg-surface-overlay border border-border-subtle text-text-primary text-[10px]">Linux</span>
+<span class="px-1.5 py-0.5 rounded-sm bg-surface-overlay border border-border-subtle text-text-primary text-[10px]">SQL</span>
+<span class="px-1.5 py-0.5 rounded-sm bg-surface-overlay border border-border-subtle text-text-muted text-[10px]">+14 tags</span>
+</div>
+</div>
+</div>
+<!-- Help callout box (Hermes Agent prompt style) -->
+<div class="rounded-sm border border-border-subtle bg-surface-raised p-3 flex items-start gap-2.5 font-mono text-xs">
+<span class="text-status-warning font-bold mt-0.5">&gt;</span>
+<p class="text-text-secondary text-[11px] leading-relaxed">
+<span class="text-text-primary font-medium">ATS_NOTE:</span> Multi-column tables induce parse degradation in legacy Greenhouse/Lever scrapers. Standard linear markdown or chronological structure maximizes ATS recall.
+        </p>
+</div>
+</section>
+<!-- ================= RIGHT COLUMN: Target Role Details (7 Cols) ================= -->
+<section class="lg:col-span-7 flex flex-col gap-4">
+<div class="bg-surface-raised rounded-sm border border-border-subtle p-4 shadow-xl">
+<!-- Card Header Bar -->
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<div class="flex gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#3B3D4D]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#3B3D4D]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#3B3D4D]"></span>
+</div>
+<span class="text-xs text-text-muted font-mono ml-2">SPEC:TARGET_JOB://02</span>
+</div>
+<!-- Quick Template switcher -->
+<div class="flex items-center gap-1.5 font-mono text-xs">
+<span class="text-text-muted text-[10px] uppercase">PRESETS:</span>
+<button class="px-2 py-0.5 rounded-sm border border-border-active bg-surface-overlay hover:bg-surface text-text-primary text-[10px] transition-colors" type="button">
+              Cloudflare
+            </button>
+<button class="px-2 py-0.5 rounded-sm border border-border-subtle bg-surface-overlay hover:bg-surface text-text-muted text-[10px] transition-colors" type="button">
+              Datadog
+            </button>
+</div>
+</div>
+<div class="flex items-center justify-between mb-3">
+<div>
+<h2 class="font-sans font-semibold text-sm text-white tracking-wide flex items-center gap-2">
+<span class="text-electric-blue font-mono">[02]</span>
+<span>TARGET REQUISITION SPEC</span>
+</h2>
+<p class="text-[11px] text-text-muted mt-0.5">Benchmark requirements &amp; semantic weight calibration</p>
+</div>
+<span class="text-[10px] px-1.5 py-0.5 bg-electric-blue/15 text-primary border border-electric-blue/30 rounded-sm">REQUISITION_LOADED</span>
+</div>
+<!-- Inputs Grid: Title & Company -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+<!-- Target Job Title -->
+<div>
+<label class="block text-xs font-mono text-text-secondary mb-1" for="job-title">
+              TARGET_ROLE <span class="text-electric-blue">*</span>
+</label>
+<div class="relative">
+<input class="w-full bg-terminal-black border border-border-subtle focus:border-electric-blue focus:ring-1 focus:ring-electric-blue rounded-sm px-3 py-1.5 text-text-primary font-mono text-xs focus:outline-none transition-all placeholder:text-text-muted" id="job-title" placeholder="e.g. Software Engineer Intern" type="text" value="Software Engineer Intern, Systems &amp; Cloud"/>
+</div>
+</div>
+<!-- Company / Organization -->
+<div>
+<label class="block text-xs font-mono text-text-secondary mb-1" for="company-name">
+              TARGET_ORGANIZATION <span class="text-electric-blue">*</span>
+</label>
+<div class="relative">
+<input class="w-full bg-terminal-black border border-border-subtle focus:border-electric-blue focus:ring-1 focus:ring-electric-blue rounded-sm px-3 py-1.5 text-text-primary font-mono text-xs focus:outline-none transition-all placeholder:text-text-muted" id="company-name" placeholder="e.g. Stripe, Palantir" type="text" value="Cloudflare"/>
+</div>
+</div>
+</div>
+<!-- Textarea: Job Description styled as Code Editor -->
+<div>
+<div class="flex items-center justify-between mb-1 text-xs font-mono">
+<label class="text-text-secondary flex items-center gap-1.5" for="job-description">
+<span>JOB_DESCRIPTION_SPEC</span>
+<span class="text-electric-blue">*</span>
+</label>
+<div class="flex items-center gap-2 text-text-muted text-[11px]">
+<button class="text-primary hover:text-white flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">content_paste</span>
+<span>Paste clipboard</span>
+</button>
+<span>•</span>
+<span class="text-text-muted font-mono">1,420 bytes</span>
+</div>
+</div>
+<!-- Code Editor Styled Box with terminal top bar and line numbers aesthetic -->
+<div class="rounded-sm border border-border-active bg-terminal-black overflow-hidden focus-within:border-electric-blue focus-within:ring-1 focus-within:ring-electric-blue transition-all">
+<!-- Terminal Editor tab bar -->
+<div class="bg-surface-raised border-b border-border-subtle px-3 py-1.5 flex items-center justify-between text-[11px] font-mono text-text-muted">
+<div class="flex items-center gap-2">
+<span class="text-white text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-electric-blue"></span>
+                  requirements.spec.txt
+                </span>
+<span class="text-text-muted">•</span>
+<span>MODE: RAW_TEXT</span>
+</div>
+<div class="flex items-center gap-2 text-[10px]">
+<span class="text-text-secondary">LN 18, COL 62</span>
+</div>
+</div>
+<!-- Editor body with gutter & textarea -->
+<div class="flex relative">
+<!-- Mock Line Number Gutter -->
+<div class="hidden sm:block select-none bg-surface-raised/40 border-r border-border-subtle py-3 px-2 text-right font-mono text-[11px] text-text-muted leading-relaxed font-mono w-9 flex-shrink-0">
+                01<br/>02<br/>03<br/>04<br/>05<br/>06<br/>07<br/>08<br/>09<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16
+              </div>
+<!-- Main Textarea -->
+<textarea class="w-full p-3 bg-transparent text-text-primary font-mono text-xs border-0 focus:ring-0 resize-none leading-relaxed focus:outline-none" id="job-description" placeholder="Paste full JD, skill spec, or responsibility list..." rows="10">About the Role:
+We are looking for a Systems &amp; Cloud Software Engineering Intern to join our edge infrastructure team. In this role, you will help design, build, and deploy mission-critical distributed services handling millions of concurrent requests.
+
+What You'll Do:
+• Build low-latency networked microservices utilizing Go or Rust.
+• Instrument telemetry and observability with Prometheus, OpenTelemetry, and Grafana.
+• Assist in containerizing services via Docker and managing orchestration manifests in Kubernetes (k8s).
+• Optimize CI/CD pipelines (GitHub Actions) to deliver deterministic automated test runs.
+• Collaborate with staff engineers to troubleshoot Linux kernel network stack and eBPF tracing events.
+
+Minimum Qualifications:
+• Currently pursuing a B.S. or M.S. in Computer Science, Software Engineering, or related technical discipline.
+• Solid fundamentals in Data Structures, Algorithms, Distributed Systems, and Operating Systems.
+• Practical project experience writing clean code in Go, Rust, C++, or modern Python.
+• Familiarity with container ecosystems (Docker, Kubernetes) and Unix/Linux shell tooling.
+• Proactive mindset and clear written/verbal technical communication.</textarea>
+</div>
+<!-- Terminal editor footer bar -->
+<div class="bg-surface-raised border-t border-border-subtle px-3 py-1.5 flex items-center justify-between text-text-secondary font-mono text-[11px]">
+<div class="flex items-center gap-2">
+<span class="flex items-center gap-1 text-phosphor-green font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  PARSER_STATE: 6 Hard Skills, 3 Core Competencies Identified
+                </span>
+</div>
+<div class="flex items-center gap-2 text-text-muted text-[10px]">
+<span>EN-US</span>
+<span>•</span>
+<span>CRLF</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- ================= BOTTOM ACTION & FEEDBACK BAR (Hermes Execution Dock) ================= -->
+<div class="mt-5 bg-surface-raised rounded-sm border border-border-subtle p-4 shadow-xl font-mono">
+<div class="flex flex-col md:flex-row items-center justify-between gap-4">
+<!-- Left validation info & Engine Telemetry -->
+<div class="flex items-center gap-3 w-full md:w-auto">
+<div class="w-8 h-8 rounded-sm bg-phosphor-green/10 border border-phosphor-green/30 flex items-center justify-center text-phosphor-green flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-white">
+              PARSED_DOCUMENT_READY
+            </span>
+<span class="px-1.5 py-0.2 rounded-sm bg-surface-overlay border border-border-subtle text-text-secondary text-[10px]">
+              ATS_READY
+            </span>
+</div>
+<p class="text-[11px] text-text-muted mt-0.5">
+            Engine: Nous-Hermes-ATS-Parser // Est. runtime: 6-8 seconds
+          </p>
+</div>
+</div>
+<!-- Right Action Cluster -->
+<div class="flex items-center gap-2.5 w-full md:w-auto justify-end">
+<!-- Secondary Action: Reset or Save Draft -->
+<button class="px-3.5 py-2 rounded-sm border border-border-subtle hover:border-border-active bg-surface-overlay hover:bg-surface text-text-secondary hover:text-white text-xs transition-all active:scale-[0.98]" type="button">
+          [CLEAR_BUFFER]
+        </button>
+<!-- Primary Prominent CTA: Analyze My Match (Electric Blue Hermes Action) -->
+<button class="group relative inline-flex items-center justify-center gap-2 px-5 py-2 rounded-sm text-white text-xs font-semibold font-mono bg-electric-blue hover:bg-blue-600 transition-all duration-150 active:scale-[0.98] hermes-glow-blue border border-blue-400/40" id="analyze-cta-btn" type="button">
+<span class="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-12">bolt</span>
+<span class="tracking-wider">EXECUTE_MATCH_ANALYSIS</span>
+<span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Telemetry Inspector Pillars -->
+<div class="mt-4 pt-3.5 border-t border-border-subtle grid grid-cols-1 md:grid-cols-3 gap-2.5">
+<!-- Pillar 1: Hard Skills Engine -->
+<div class="p-2.5 rounded-sm bg-terminal-black border border-border-subtle flex items-start gap-2.5">
+<div class="p-1 rounded-sm bg-electric-blue/15 text-primary border border-electric-blue/30">
+<span class="material-symbols-outlined text-[14px]">code</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-white">HARD_SKILLS_VECTOR</span>
+<span class="text-[10px] text-primary uppercase">IN_SCOPE</span>
+</div>
+<p class="text-[11px] text-text-muted mt-0.5 leading-snug">
+            Checks Go/Rust, Kubernetes, CI/CD against candidate bullet embeddings.
+          </p>
+</div>
+</div>
+<!-- Pillar 2: Domain Context Analysis -->
+<div class="p-2.5 rounded-sm bg-terminal-black border border-border-subtle flex items-start gap-2.5">
+<div class="p-1 rounded-sm bg-surface-overlay text-status-warning border border-status-warning/30">
+<span class="material-symbols-outlined text-[14px]">memory</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-white">SYSTEMS_DEPTH</span>
+<span class="text-[10px] text-status-warning uppercase">IN_SCOPE</span>
+</div>
+<p class="text-[11px] text-text-muted mt-0.5 leading-snug">
+            Measures networking, eBPF, low-latency, and concurrency architectural depth.
+          </p>
+</div>
+</div>
+<!-- Pillar 3: Experience Density & Metric Scoring -->
+<div class="p-2.5 rounded-sm bg-terminal-black border border-border-subtle flex items-start gap-2.5">
+<div class="p-1 rounded-sm bg-phosphor-green/10 text-phosphor-green border border-phosphor-green/30">
+<span class="material-symbols-outlined text-[14px]">query_stats</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-white">METRIC_DENSITY</span>
+<span class="text-[10px] text-phosphor-green uppercase">IN_SCOPE</span>
+</div>
+<p class="text-[11px] text-text-muted mt-0.5 leading-snug">
+            Calculates ratio of quantified metrics (% reductions, scale, QPS) in bullet points.
+          </p>
+</div>
+</div>
+</div>
+<!-- Real-time Interactive Simulation Drawer (Terminal Execution View) -->
+<div class="hidden mt-4 pt-3.5 border-t border-border-subtle bg-terminal-black rounded-sm p-3.5 border border-electric-blue/40" id="processing-drawer">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-electric-blue animate-ping"></div>
+<span class="text-xs font-semibold text-white">HERMES_REASONING_ENGINE &gt;&gt; RUNNING</span>
+</div>
+<span class="font-mono text-[11px] text-primary">STAGE: VECTORIZING_EXPERIENCE_EMBEDDINGS</span>
+</div>
+<!-- Terminal Progress Bar -->
+<div class="w-full bg-surface-raised rounded-none h-1.5 overflow-hidden border border-border-subtle">
+<div class="bg-electric-blue h-full transition-all duration-500" style="width: 68%;"></div>
+</div>
+<p class="text-[11px] text-text-secondary mt-2 font-mono text-center">
+        &gt; Extracting semantic match matrix against 14 Cloudflare systems engineering requirements... [68%]
+      </p>
+</div>
+</div>
+<!-- Terminal Footer Strip -->
+<div class="mt-6 flex flex-col sm:flex-row items-center justify-between text-text-muted text-xs font-mono px-1 gap-3">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1.5 text-text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-phosphor-green"></span>
+        Zero Data Retention // Model Never Trains on User Inputs
+      </span>
+<span class="hidden md:inline text-border-active">|</span>
+<span class="hidden md:inline">Calibrated for Greenhouse, Lever, and Workday ATS grammars</span>
+</div>
+<div class="flex items-center gap-3 text-text-muted">
+<a class="hover:text-primary transition-colors" href="#">[API_DOCS]</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">[ATS_REPL]</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">[SYS_STATUS]</a>
+</div>
+</div>
+</main>
+<!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
+<nav class="docked full-width bottom-0 fixed z-50 md:hidden bg-[#0A0A0C]/95 backdrop-blur-lg border-t border-border-subtle font-mono">
+<div class="flex justify-around items-center px-4 py-2">
+<!-- Tab 1: Dashboard -->
+<a class="flex flex-col items-center justify-center text-text-muted py-1 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="text-[10px] mt-0.5">Dash</span>
+</a>
+<!-- Tab 2: Match (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-primary font-semibold py-1" href="#">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="text-[10px] mt-0.5">Match</span>
+</a>
+<!-- Tab 3: Roadmap -->
+<a class="flex flex-col items-center justify-center text-text-muted py-1 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+<span class="text-[10px] mt-0.5">Roadmap</span>
+</a>
+<!-- Tab 4: Interview -->
+<a class="flex flex-col items-center justify-center text-text-muted py-1 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">code</span>
+<span class="text-[10px] mt-0.5">REPL</span>
+</a>
+</div>
+</nav>
+<!-- Lightweight Micro-Interactions Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const analyzeBtn = document.getElementById('analyze-cta-btn');
+    const processingDrawer = document.getElementById('processing-drawer');
+    const sampleBtn = document.getElementById('sample-resume-btn');
+
+    if (analyzeBtn && processingDrawer) {
+      analyzeBtn.addEventListener('click', () => {
+        processingDrawer.classList.toggle('hidden');
+        if (!processingDrawer.classList.contains('hidden')) {
+          analyzeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    }
+
+    if (sampleBtn) {
+      sampleBtn.addEventListener('click', () => {
+        sampleBtn.classList.add('border-electric-blue');
+        setTimeout(() => {
+          sampleBtn.classList.remove('border-electric-blue');
+        }, 400);
+      });
+    }
+  });
+</script>
+</body></html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillSync AI — Autonomous 30-Day Terminal Roadmap</title>
+<!-- Fonts & Material Symbols -->
+<link href="https://fonts.preconnect.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom theme config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-base": "#0A0A0C",
+            "surface-raised": "#121216",
+            "surface-overlay": "#181820",
+            "border-subtle": "#1F2029",
+            "border-active": "#2E303E",
+            "border-contour": "#27272a",
+            "electric-blue": "#0000F2",
+            "ultramarine": "#1E3A8A",
+            "primary": "#bfc2ff",
+            "primary-container": "#0000f2",
+            "text-primary": "#ECEBE6",
+            "text-secondary": "#92929B",
+            "text-muted": "#555660",
+            "phosphor-green": "#00FF88",
+            "cyber-amber": "#FF5500",
+            "cyan-glow": "#00f0ff"
+          },
+          "fontFamily": {
+            "display": ["Space Grotesk", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Hermes Agent scanline & grid texture */
+    .hermes-grid-bg {
+      background-color: #0A0A0C;
+      background-image: 
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0, 0, 242, 0.14), transparent 75%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+    }
+    .contour-box {
+      background-color: #121216;
+      border: 1px solid #27272a;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.8), 0 8px 24px -6px rgba(0,0,0,0.6);
+    }
+    .contour-box-active {
+      background-color: #13131b;
+      border: 1px solid #0000f2;
+      box-shadow: 0 0 20px -3px rgba(0, 0, 242, 0.35), inset 0 0 16px rgba(0, 0, 242, 0.05);
+    }
+  </style>
+</head>
+<body class="bg-surface-base text-text-primary antialiased min-h-screen hermes-grid-bg flex flex-col font-mono selection:bg-electric-blue selection:text-white">
+<!-- ================= TOP HERMES HEADER ================= -->
+<header class="border-b border-border-contour bg-surface-base/90 backdrop-blur-md sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-4 sm:px-6 max-w-7xl mx-auto h-14">
+<!-- Brand Logo & Console Tag -->
+<div class="flex items-center gap-5">
+<a class="flex items-center gap-2.5 group" href="#">
+<div class="w-7 h-7 rounded border border-electric-blue bg-electric-blue/20 flex items-center justify-center text-white group-hover:bg-electric-blue transition-colors">
+<span class="material-symbols-outlined text-base">terminal</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-display font-bold text-base tracking-tight uppercase text-white">SkillSync<span class="text-electric-blue">.AI</span></span>
+<span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border-contour text-text-muted bg-surface-raised hidden sm:inline-block">AGENT_v2.4</span>
+</div>
+</a>
+<!-- Nav Cluster -->
+<nav class="hidden md:flex items-center gap-1 text-xs">
+<a class="text-text-muted hover:text-text-primary px-3 py-1.5 rounded hover:bg-surface-raised transition-colors" href="#">// DASHBOARD</a>
+<a class="text-text-muted hover:text-text-primary px-3 py-1.5 rounded hover:bg-surface-raised transition-colors" href="#">// MATCH_ANALYSIS</a>
+<a class="text-white font-medium px-3 py-1.5 rounded bg-surface-overlay border border-border-contour text-electric-blue" href="#">[ LEARNING_ROADMAP ]</a>
+<a class="text-text-muted hover:text-text-primary px-3 py-1.5 rounded hover:bg-surface-raised transition-colors" href="#">// INTERVIEW_PREP</a>
+</nav>
+</div>
+<!-- Trailing Actions Cluster -->
+<div class="flex items-center gap-3 font-mono text-xs">
+<div class="hidden sm:flex items-center gap-2 text-[11px] text-text-muted border border-border-contour px-2.5 py-1 rounded bg-surface-raised">
+<span class="w-1.5 h-1.5 rounded-full bg-phosphor-green animate-pulse"></span>
+<span>NOUS_GATEWAY: READY</span>
+</div>
+<button class="p-1.5 rounded border border-border-contour text-text-secondary hover:text-white hover:bg-surface-raised transition-colors" title="Telemetry Sync" type="button">
+<span class="material-symbols-outlined text-lg">sync_saved_locally</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-electric-blue text-white font-semibold text-xs tracking-wider uppercase hover:bg-blue-600 transition-all shadow-[0_0_12px_rgba(0,0,242,0.45)]" type="button">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>New Pipeline</span>
+</button>
+<div class="flex items-center pl-2 border-l border-border-contour">
+<div class="w-7 h-7 rounded border border-border-contour overflow-hidden bg-surface-raised">
+<img alt="Student Profile Avatar" class="w-full h-full object-cover grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7H2IaR5Omn8MdaYEueYc_DmRSL0ByX2tCfHVeA0OPlu9n7xOlNA7PnZXpMZ_MqGI2FB-Z7gt8tfCPO7147NV-y0xuTUx4d58azT2H9OVuYUGB-LlsT7yFAXWC3OnsxtgbYb6Ld9AUBGFvvRw9BVs9kZr9g7izoR7i4TC3O8E81wckZA0KZbRLXrpbz7lLYbnS1_n1tdODoGqRhPWAWKlBcttr1O-VSiijmXkefcPzXkFj4u8LYwBm"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE CANVAS ================= -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6 mb-16 md:mb-10">
+<!-- PAGE HEADER SECTION -->
+<section class="space-y-4">
+<!-- Target Role & Telemetry Pill Tags -->
+<div class="flex flex-wrap items-center gap-2 text-xs">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-surface-raised border border-border-contour text-text-primary">
+<span class="w-2 h-2 rounded-full bg-cyan-glow shadow-[0_0_8px_#00f0ff]"></span>
+<span class="text-text-muted">TARGET:</span>
+<span class="text-white font-semibold">Software Engineer Intern @ Cloudflare</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised border border-border-contour text-text-secondary">
+<span class="text-cyber-amber font-mono">[04]</span>
+<span>Skill Gaps Targeted</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised border border-border-contour text-text-muted">
+<span class="material-symbols-outlined text-sm">timer</span>
+<span>30-Day Accelerated Execution Trace</span>
+</div>
+</div>
+<!-- Main Headline & Subtitle -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-border-contour/80 pb-6">
+<div>
+<div class="text-[11px] font-mono text-electric-blue uppercase tracking-widest mb-1">// AUTONOMOUS MASTERY CURRICULUM</div>
+<h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase">
+Personalized 30-Day Mastery Plan
+</h1>
+<p class="font-mono text-xs sm:text-sm text-text-secondary mt-1.5 max-w-2xl leading-relaxed">
+Structured weekly milestones engineered to eliminate core edge-systems gaps before technical interview screening.
+</p>
+</div>
+<!-- Action Quick-Links -->
+<div class="flex items-center gap-2 self-start lg:self-auto shrink-0 font-mono text-xs">
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded bg-surface-raised hover:bg-surface-overlay text-text-primary border border-border-contour transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>EXPORT_SYLLABUS</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded border border-electric-blue/60 bg-electric-blue/10 text-white hover:bg-electric-blue/20 transition-all" type="button">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span>SHARE_WITH_MENTOR</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ROADMAP TELEMETRY SUMMARY BAR CARD -->
+<section class="contour-box rounded-lg p-5 relative overflow-hidden">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<!-- Left: Overall Metric & Progress Visual -->
+<div class="flex-1 space-y-3 font-mono">
+<div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+<div class="flex items-center gap-2.5">
+<span class="text-white font-bold tracking-wide uppercase">// RUNTIME STATUS:</span>
+<span class="px-2 py-0.5 rounded text-[10px] bg-electric-blue/20 border border-electric-blue/50 text-cyan-glow font-semibold tracking-wider">ON_SCHEDULE</span>
+</div>
+<div class="text-text-secondary text-xs">
+<span class="text-white font-semibold">35% COMPLETE</span> <span class="text-text-muted">[07/20 TASKS RESOLVED]</span>
+</div>
+</div>
+<!-- Multi-segment Progress Bar -->
+<div class="w-full bg-surface-base border border-border-contour rounded-sm h-3 p-[2px] overflow-hidden">
+<div class="h-full bg-gradient-to-r from-electric-blue to-blue-500 rounded-sm relative" style="width: 35%;">
+<span class="absolute right-0 top-0 bottom-0 w-1 bg-white shadow-[0_0_8px_#ffffff]"></span>
+</div>
+</div>
+<!-- Timeline milestones indicators -->
+<div class="grid grid-cols-4 font-mono text-[10px] text-text-muted uppercase pt-0.5">
+<div class="text-left text-phosphor-green flex items-center gap-1">
+<span>[01]</span> <span class="hidden sm:inline">DONE</span> (5/5)
+</div>
+<div class="text-left text-cyan-glow flex items-center gap-1">
+<span>[02]</span> <span class="hidden sm:inline">ACTIVE</span> (2/5)
+</div>
+<div class="text-left text-text-muted flex items-center gap-1">
+<span>[03]</span> <span class="hidden sm:inline">QUEUED</span> (0/5)
+</div>
+<div class="text-right text-text-muted flex items-center justify-end gap-1">
+<span>[04]</span> <span class="hidden sm:inline">CAPSTONE</span> (0/5)
+</div>
+</div>
+</div>
+<!-- Right: Deadline & Calendar Integration CTA -->
+<div class="flex items-center gap-5 lg:pl-6 lg:border-l lg:border-border-contour shrink-0 font-mono">
+<div class="text-left">
+<div class="text-[10px] text-text-muted uppercase tracking-wider">// TARGET_DEADLINE</div>
+<div class="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-cyan-glow text-base">calendar_today</span>
+Nov 15, 2024
+</div>
+<div class="text-[11px] text-text-secondary">T-19 days remaining</div>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded bg-surface-raised border border-border-contour hover:border-electric-blue text-white text-xs hover:bg-surface-overlay transition-all" type="button">
+<span class="material-symbols-outlined text-sm text-electric-blue">event_available</span>
+<span>SYNC_CALENDAR</span>
+</button>
+</div>
+</div>
+</section>
+<!-- MAIN TWO-COLUMN LAYOUT: 4-WEEK ROADMAP TIMELINE + COPILOT STUDY ASSISTANT -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- LEFT 8 COLS: 4 WEEKLY MILESTONES -->
+<section class="lg:col-span-8 space-y-4">
+<div class="flex items-center justify-between font-mono text-xs pb-1 border-b border-border-contour/60">
+<div class="flex items-center gap-2">
+<span class="text-electric-blue">#</span>
+<h2 class="font-display font-semibold text-sm text-white tracking-wide uppercase">Curated Milestone Execution Pipeline</h2>
+</div>
+<span class="text-text-muted text-[11px] hidden sm:inline">// CORE_EDGE_STANDARDS_v1.0</span>
+</div>
+<!-- TIMELINE CONTAINER -->
+<div class="space-y-4 relative before:absolute before:inset-0 before:left-4 before:w-px before:bg-border-contour before:hidden md:before:block">
+<!-- ================= WEEK 1 (COMPLETED) ================= -->
+<div class="relative pl-0 md:pl-10 group">
+<!-- Timeline Marker Dot -->
+<div class="hidden md:flex absolute left-2 top-4 w-4 h-4 rounded-full bg-surface-base border border-phosphor-green items-center justify-center -translate-x-1/2 z-10 shadow-[0_0_8px_rgba(0,255,136,0.3)]">
+<span class="w-1.5 h-1.5 rounded-full bg-phosphor-green"></span>
+</div>
+<!-- Milestone Card -->
+<div class="contour-box rounded-lg p-5 transition-all hover:border-border-active">
+<!-- Card Header -->
+<div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="px-2 py-0.5 rounded bg-surface-base border border-border-contour text-white font-bold">[01] WEEK_01</span>
+<span class="text-phosphor-green flex items-center gap-1 text-[11px]">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+100% RESOLVED
+</span>
+</div>
+<h3 class="font-display font-semibold text-lg text-white mt-1.5">Containerization &amp; Docker Deep Dive</h3>
+<p class="font-mono text-xs text-text-secondary mt-0.5">Solidify core isolated deployment concepts, multi-layer caching, and local microservice composition.</p>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-base border border-border-contour text-text-muted font-mono text-[11px]">
+<span class="material-symbols-outlined text-xs">history_toggle_off</span>
+<span>COMPLETED IN 9 HRS</span>
+</div>
+</div>
+<!-- Task List (Completed State) -->
+<div class="space-y-2 mb-4 font-mono text-xs">
+<!-- Task 1 -->
+<div class="p-3 rounded bg-surface-base/80 border border-border-contour/80 flex items-start gap-3">
+<div class="mt-0.5 w-4 h-4 rounded-sm border border-phosphor-green/70 bg-phosphor-green/20 flex items-center justify-center text-phosphor-green text-[10px]">✓</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="text-text-muted line-through">Multi-stage Dockerfiles Optimization</span>
+<span class="text-text-muted text-[11px]">4.0h</span>
+</div>
+<p class="text-[11px] text-text-muted">Alpine base minimization, non-root user security configs, buildkit caching.</p>
+<div class="flex flex-wrap items-center gap-3 pt-1 text-[11px]">
+<a class="text-text-secondary hover:text-white flex items-center gap-1 underline underline-offset-2" href="#">
+<span class="material-symbols-outlined text-xs text-electric-blue">menu_book</span> Docker Best Practice Docs
+</a>
+<span class="text-phosphor-green flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">terminal</span> Sandbox Passed (100%)
+</span>
+</div>
+</div>
+</div>
+<!-- Task 2 -->
+<div class="p-3 rounded bg-surface-base/80 border border-border-contour/80 flex items-start gap-3">
+<div class="mt-0.5 w-4 h-4 rounded-sm border border-phosphor-green/70 bg-phosphor-green/20 flex items-center justify-center text-phosphor-green text-[10px]">✓</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="text-text-muted line-through">Docker Compose Networking &amp; Secrets</span>
+<span class="text-text-muted text-[11px]">5.0h</span>
+</div>
+<p class="text-[11px] text-text-muted">Isolated bridge networks, volume mounts, env injection, and healthchecks.</p>
+<div class="flex flex-wrap items-center gap-3 pt-1 text-[11px]">
+<a class="text-text-secondary hover:text-white flex items-center gap-1 underline underline-offset-2" href="#">
+<span class="material-symbols-outlined text-xs text-electric-blue">school</span> Coursera Docker Module
+</a>
+<span class="text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-phosphor-green">code</span> Completed Lab
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone Project Submission -->
+<div class="p-3 rounded bg-surface-base border border-border-contour flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-electric-blue text-base">folder_zip</span>
+<div>
+<div class="text-[10px] text-text-muted uppercase">// MILESTONE PROJECT ARTIFACT</div>
+<div class="text-white font-medium">Containerized Microservice API</div>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-raised border border-border-contour text-phosphor-green text-[11px]">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span>GITHUB_VERIFIED</span>
+</span>
+</div>
+</div>
+</div>
+<!-- ================= WEEK 2 (IN PROGRESS - ACTIVE FOCUS) ================= -->
+<div class="relative pl-0 md:pl-10 group">
+<!-- Timeline Marker Dot -->
+<div class="hidden md:flex absolute left-2 top-4 w-4 h-4 rounded-full bg-electric-blue border-2 border-white items-center justify-center -translate-x-1/2 z-10 shadow-[0_0_12px_#0000f2]">
+<span class="w-1 h-1 rounded-full bg-white"></span>
+</div>
+<!-- Milestone Card Active Hermes style -->
+<div class="contour-box-active rounded-lg p-5 relative overflow-hidden">
+<!-- Top electric blue hairline indicator -->
+<div class="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-electric-blue via-cyan-glow to-electric-blue"></div>
+<!-- Card Header -->
+<div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="px-2 py-0.5 rounded bg-electric-blue text-white font-bold">[02] WEEK_02</span>
+<span class="px-2 py-0.5 rounded bg-electric-blue/20 border border-electric-blue/40 text-cyan-glow font-mono text-[10px] tracking-wider uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-glow animate-ping"></span>
+IN_PROGRESS (60%)
+</span>
+</div>
+<h3 class="font-display font-semibold text-lg text-white mt-1.5">Kubernetes Fundamentals &amp; Pod Orchestration</h3>
+<p class="font-mono text-xs text-text-secondary mt-0.5">Master declarative infrastructure, rolling updates, and scalable cluster management in microservice topologies.</p>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-base border border-border-contour text-cyan-glow font-mono text-[11px]">
+<span class="material-symbols-outlined text-xs">timelapse</span>
+<span>EST: 8h REMAINING</span>
+</div>
+</div>
+<!-- Active Task Checklist -->
+<div class="space-y-2.5 mb-4 font-mono text-xs">
+<!-- Task 1 (Done) -->
+<div class="p-3 rounded bg-surface-base/80 border border-border-contour flex items-start gap-3">
+<input checked="" class="mt-0.5 h-3.5 w-3.5 rounded-none bg-surface-base border-border-contour text-electric-blue focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="text-text-muted line-through">Pod &amp; Service YAML Manifests Mastery</span>
+<span class="text-text-muted text-[11px]">2.5h</span>
+</div>
+<p class="text-[11px] text-text-muted">Configuring resource limits, liveness and readiness probes, and label selectors.</p>
+<div class="flex items-center gap-3 pt-0.5 text-[11px]">
+<a class="text-text-secondary hover:text-white flex items-center gap-1 underline underline-offset-2" href="#">
+<span class="material-symbols-outlined text-xs text-electric-blue">menu_book</span> Kubernetes.io Spec Docs
+</a>
+<span class="text-phosphor-green flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check</span> Completed
+</span>
+</div>
+</div>
+</div>
+<!-- Task 2 (Current Active Task) -->
+<div class="p-3.5 rounded bg-surface-raised border border-electric-blue/60 shadow-[inset_0_0_12px_rgba(0,0,242,0.1)] flex items-start gap-3">
+<input class="mt-0.5 h-3.5 w-3.5 rounded-none bg-surface-base border-electric-blue text-electric-blue focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex-1 space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="text-white font-semibold flex items-center gap-2">
+Deployments, ReplicaSets &amp; Rolling Upgrades
+<span class="px-1.5 py-0.2 bg-electric-blue text-white text-[9px] font-mono tracking-widest uppercase">EXECUTING</span>
+</span>
+<span class="text-cyan-glow text-[11px]">3.5h</span>
+</div>
+<p class="text-[11px] text-text-secondary">Zero-downtime rolling deploys, rollbacks with `kubectl rollout`, and Horizontal Pod Autoscaling (HPA).</p>
+<div class="flex flex-wrap items-center gap-2 pt-1.5">
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-electric-blue text-white text-xs hover:bg-blue-600 transition-all font-mono uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-xs">terminal</span>
+<span>Launch Interactive Sandbox</span>
+</a>
+<a class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded border border-border-contour text-text-secondary hover:text-white text-xs hover:bg-surface-base transition-colors" href="#">
+<span class="material-symbols-outlined text-xs">play_arrow</span> Video (Cloudflare Edge)
+</a>
+</div>
+</div>
+</div>
+<!-- Task 3 (Pending this week) -->
+<div class="p-3 rounded bg-surface-base/80 border border-border-contour flex items-start gap-3">
+<input class="mt-0.5 h-3.5 w-3.5 rounded-none bg-surface-base border-border-contour text-electric-blue focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="text-text-primary">Minikube Local Cluster Ingress Setup</span>
+<span class="text-text-secondary text-[11px]">2.0h</span>
+</div>
+<p class="text-[11px] text-text-secondary">Route external traffic via NGINX ingress controller and tune DNS host mappings.</p>
+<div class="flex items-center gap-3 pt-0.5 text-[11px]">
+<a class="text-text-muted hover:text-white flex items-center gap-1 underline underline-offset-2" href="#">
+<span class="material-symbols-outlined text-xs">integration_instructions</span> Tutorial Guide
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Suggested Project -->
+<div class="p-3.5 rounded bg-surface-base border border-border-contour flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded border border-electric-blue/50 bg-electric-blue/10 flex items-center justify-center text-electric-blue shrink-0">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+</div>
+<div>
+<div class="text-[10px] text-electric-blue uppercase">// WEEK_02 CAPSTONE LAB</div>
+<div class="text-white font-medium">Self-healing K8s deployment with ingress</div>
+</div>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border-contour hover:border-electric-blue text-white text-xs bg-surface-raised hover:bg-surface-overlay transition-colors" type="button">
+<span>VIEW_SPECS</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= WEEK 3 (UPCOMING) ================= -->
+<div class="relative pl-0 md:pl-10 group opacity-75 hover:opacity-100 transition-opacity">
+<!-- Timeline Marker Dot -->
+<div class="hidden md:flex absolute left-2 top-4 w-4 h-4 rounded-full bg-surface-base border border-border-contour items-center justify-center -translate-x-1/2 z-10">
+<span class="w-1.5 h-1.5 rounded-full bg-text-muted"></span>
+</div>
+<!-- Milestone Card -->
+<div class="contour-box rounded-lg p-5">
+<!-- Card Header -->
+<div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="px-2 py-0.5 rounded bg-surface-base border border-border-contour text-text-muted font-bold">[03] WEEK_03</span>
+<span class="text-text-muted text-[11px]">// QUEUED (0%)</span>
+</div>
+<h3 class="font-display font-semibold text-lg text-white mt-1.5">gRPC, Protobuf &amp; High-Performance RPCs</h3>
+<p class="font-mono text-xs text-text-secondary mt-0.5">Benchmark and engineer high-throughput binary interfaces critical for low-latency edge edge-worker backends.</p>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-base border border-border-contour text-text-muted font-mono text-[11px]">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>EST: 12 HRS</span>
+</div>
+</div>
+<!-- Tasks Preview -->
+<div class="space-y-2 mb-3 font-mono text-xs">
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-base/60 border border-border-contour/50 text-text-secondary">
+<div class="flex items-center gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-border-contour"></span>
+<span>Define Proto3 schemas with nested messages &amp; streaming</span>
+</div>
+<span class="text-text-muted text-[11px]">3.0h</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-base/60 border border-border-contour/50 text-text-secondary">
+<div class="flex items-center gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-border-contour"></span>
+<span>Implement Go gRPC server &amp; bidirectional stream client</span>
+</div>
+<span class="text-text-muted text-[11px]">5.0h</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-base/60 border border-border-contour/50 text-text-secondary">
+<div class="flex items-center gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-border-contour"></span>
+<span>Benchmark throughput &amp; latency vs JSON REST APIs</span>
+</div>
+<span class="text-text-muted text-[11px]">4.0h</span>
+</div>
+</div>
+<div class="text-right font-mono text-[11px] text-text-muted">
+// REQUIRES WEEK 2 PASS SCORE &gt; 80% TO UNLOCK
+</div>
+</div>
+</div>
+<!-- ================= WEEK 4 (UPCOMING & CAPSTONE) ================= -->
+<div class="relative pl-0 md:pl-10 group opacity-75 hover:opacity-100 transition-opacity">
+<!-- Timeline Marker Dot -->
+<div class="hidden md:flex absolute left-2 top-4 w-4 h-4 rounded-full bg-surface-base border border-border-contour items-center justify-center -translate-x-1/2 z-10">
+<span class="w-1.5 h-1.5 rounded-full bg-text-muted"></span>
+</div>
+<!-- Milestone Card -->
+<div class="contour-box rounded-lg p-5">
+<!-- Card Header -->
+<div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono">
+<span class="px-2 py-0.5 rounded bg-surface-base border border-border-contour text-text-muted font-bold">[04] WEEK_04</span>
+<span class="text-text-muted text-[11px]">// FINAL CAPSTONE</span>
+</div>
+<h3 class="font-display font-semibold text-lg text-white mt-1.5">Distributed Observability &amp; CI/CD Pipelines</h3>
+<p class="font-mono text-xs text-text-secondary mt-0.5">Instrument production telemetry with OpenTelemetry and construct industrial-grade CI/CD pipelines.</p>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-base border border-border-contour text-text-muted font-mono text-[11px]">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>EST: 14 HRS</span>
+</div>
+</div>
+<!-- Tasks Preview -->
+<div class="space-y-2 mb-4 font-mono text-xs">
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-base/60 border border-border-contour/50 text-text-secondary">
+<div class="flex items-center gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-border-contour"></span>
+<span>OpenTelemetry metrics, structured logs &amp; distributed tracing</span>
+</div>
+<span class="text-text-muted text-[11px]">6.0h</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-base/60 border border-border-contour/50 text-text-secondary">
+<div class="flex items-center gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-border-contour"></span>
+<span>GitHub Actions automated build, test &amp; security linting matrix</span>
+</div>
+<span class="text-text-muted text-[11px]">4.0h</span>
+</div>
+</div>
+<!-- Grand Final Capstone Box -->
+<div class="p-3.5 rounded bg-surface-base border border-border-contour flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-xs">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded border border-border-contour bg-surface-raised flex items-center justify-center text-cyber-amber shrink-0">
+<span class="material-symbols-outlined text-base">workspace_premium</span>
+</div>
+<div>
+<div class="text-[10px] text-text-muted uppercase">// PORTFOLIO SHOWCASE ASSET</div>
+<div class="text-white font-medium">Production-ready Cloudflare-aligned Systems Service</div>
+</div>
+</div>
+<span class="text-cyan-glow text-[11px]">+42% ATS Weight Multiplier</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT 4 COLS: COPILOT STUDY ASSISTANT & STREAK TELEMETRY -->
+<aside class="lg:col-span-4 space-y-4">
+<!-- COPILOT STUDY ASSISTANT CARD -->
+<div class="contour-box rounded-lg p-5 sticky top-20 space-y-5 font-mono">
+<!-- Assistant Header -->
+<div class="flex items-center justify-between pb-3 border-b border-border-contour">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded border border-electric-blue bg-electric-blue/20 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-base">neurology</span>
+</div>
+<div>
+<h3 class="font-display font-semibold text-sm text-white uppercase">Hermes Study Copilot</h3>
+<div class="flex items-center gap-1.5 text-[10px] text-cyan-glow">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-glow animate-pulse"></span>
+<span>LOCKED: WEEK_02</span>
+</div>
+</div>
+</div>
+<button aria-label="Copilot options" class="text-text-muted hover:text-white" type="button">
+<span class="material-symbols-outlined text-base">more_vert</span>
+</button>
+</div>
+<!-- Streak Tracker -->
+<div class="p-3.5 rounded bg-surface-base border border-border-contour flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded border border-cyber-amber/40 bg-cyber-amber/10 text-cyber-amber flex items-center justify-center text-sm font-bold">
+⚡
+</div>
+<div>
+<div class="font-display font-bold text-sm text-white">5-Day Execution Streak</div>
+<div class="text-[11px] text-text-secondary">Top 8% consistency this cycle</div>
+</div>
+</div>
+<!-- Minimal streak bars -->
+<div class="flex gap-1 items-end h-5">
+<span class="w-1.5 h-full bg-electric-blue rounded-none" title="Day 1"></span>
+<span class="w-1.5 h-full bg-electric-blue rounded-none" title="Day 2"></span>
+<span class="w-1.5 h-full bg-electric-blue rounded-none" title="Day 3"></span>
+<span class="w-1.5 h-full bg-electric-blue rounded-none" title="Day 4"></span>
+<span class="w-1.5 h-full bg-cyan-glow rounded-none shadow-[0_0_6px_#00f0ff]" title="Today"></span>
+<span class="w-1.5 h-2 bg-border-contour rounded-none" title="Day 6"></span>
+<span class="w-1.5 h-2 bg-border-contour rounded-none" title="Day 7"></span>
+</div>
+</div>
+<!-- Quick AI Generation Feature -->
+<div class="space-y-2.5">
+<div class="text-[10px] text-text-muted uppercase tracking-wider">// IMMEDIATE RETENTION TOOLS</div>
+<!-- Quick Quiz Generator Button -->
+<button class="w-full text-left p-3 rounded bg-surface-base hover:bg-surface-raised border border-border-contour hover:border-electric-blue transition-all group flex items-start gap-3" type="button">
+<div class="p-1.5 rounded border border-border-contour bg-surface-raised text-electric-blue group-hover:border-electric-blue shrink-0">
+<span class="material-symbols-outlined text-base">terminal</span>
+</div>
+<div>
+<div class="font-semibold text-xs text-white">Generate 5-Min K8s Drill</div>
+<div class="text-[11px] text-text-muted mt-0.5">Interactive probe on ReplicaSets &amp; Service routing bugs.</div>
+</div>
+</button>
+<!-- Mock Technical Screener Button -->
+<button class="w-full text-left p-3 rounded bg-surface-base hover:bg-surface-raised border border-border-contour hover:border-electric-blue transition-all group flex items-start gap-3" type="button">
+<div class="p-1.5 rounded border border-border-contour bg-surface-raised text-cyan-glow group-hover:border-electric-blue shrink-0">
+<span class="material-symbols-outlined text-base">voice_chat</span>
+</div>
+<div>
+<div class="font-semibold text-xs text-white">Simulate Cloudflare Screener</div>
+<div class="text-[11px] text-text-muted mt-0.5">Hermes asks 3 technical architecture probes on Week 1 code.</div>
+</div>
+</button>
+</div>
+<!-- Contextual AI Copilot Suggestion Box -->
+<div class="p-3.5 rounded bg-surface-base border border-border-contour space-y-1.5">
+<div class="flex items-center gap-1.5 text-electric-blue text-xs font-semibold">
+<span class="material-symbols-outlined text-sm">lightbulb</span>
+<span>PROMPT_OBSERVATION</span>
+</div>
+<p class="text-[11px] text-text-secondary leading-relaxed">
+"Cloudflare systems teams prioritize edge fault-isolation. Scrutinize how Minikube handles CoreDNS crashes in your active lab."
+</p>
+</div>
+<!-- Daily Commitment Telemetry -->
+<div class="space-y-1.5 pt-2 border-t border-border-contour text-xs">
+<div class="flex justify-between items-center text-text-muted text-[11px]">
+<span>DAILY_COMMITMENT:</span>
+<span class="text-white font-medium">1.5h REMAINING</span>
+</div>
+<div class="w-full bg-surface-base border border-border-contour rounded-sm h-1.5 overflow-hidden">
+<div class="h-full bg-electric-blue" style="width: 45%;"></div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- ================= BOTTOM NAV BAR (Mobile Only) ================= -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface-base/95 backdrop-blur-lg border-t border-border-contour md:hidden font-mono text-[10px]">
+<a class="flex flex-col items-center justify-center text-text-muted py-1 hover:text-white" href="#">
+<span class="material-symbols-outlined text-lg">space_dashboard</span>
+<span>DASH</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-muted py-1 hover:text-white" href="#">
+<span class="material-symbols-outlined text-lg">analytics</span>
+<span>MATCH</span>
+</a>
+<a class="flex flex-col items-center justify-center text-electric-blue font-semibold py-1" href="#">
+<span class="material-symbols-outlined text-lg">timeline</span>
+<span>ROADMAP</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-muted py-1 hover:text-white" href="#">
+<span class="material-symbols-outlined text-lg">mic</span>
+<span>INTERVIEW</span>
+</a>
+</nav>
+<!-- Interactive Checkbox & Animation micro-logic -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const taskCheckboxes = document.querySelectorAll('input[type="checkbox"]:not([disabled])');
+      taskCheckboxes.forEach(box => {
+        box.addEventListener('change', (e) => {
+          const container = e.target.closest('.flex-1');
+          if (!container) return;
+          const label = container.querySelector('span');
+          if (e.target.checked) {
+            label.classList.add('line-through', 'opacity-60');
+          } else {
+            label.classList.remove('line-through', 'opacity-60');
+          }
+        });
+      });
+    });
+  </script>
+</body></html>
