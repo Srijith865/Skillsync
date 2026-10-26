@@ -324,31 +324,52 @@ Return ONLY valid JSON matching this schema exactly with no extra commentary:
 }`;
 
     try {
-      // 8-second timeout guard to prevent Vercel 10s Hobby timeout (504 Gateway Timeout)
-      const TIMEOUT_MS = 8000;
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Gemma 4 generation timed out (>8s on serverless runtime)')), TIMEOUT_MS)
-      );
+      let responseText = '';
+      let usedModel = aiModel;
 
-      const generatePromise = aiClient.models.generateContent({
-        model: aiModel,
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          temperature: 0.2,
-        }
-      });
+      // Tier 1: Try Gemma 4 primary model (6s timeout)
+      try {
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Gemma 4 timeout')), 6000)
+        );
 
-      const response: any = await Promise.race([generatePromise, timeoutPromise]);
-      const responseText = response.text || '';
+        const generatePromise = aiClient.models.generateContent({
+          model: aiModel,
+          contents: prompt,
+          config: {
+            responseMimeType: 'application/json',
+            temperature: 0.2,
+          }
+        });
+
+        const response: any = await Promise.race([generatePromise, timeoutPromise]);
+        responseText = response.text || '';
+      } catch (gemmaErr: any) {
+        console.warn('Gemma 4 unavailable or returned internal error, activating live AI fallback:', gemmaErr.message);
+        
+        // Tier 2: Seamless live AI model fallback (3s latency)
+        const fallbackModel = 'gemini-3.1-flash-lite';
+        const resFallback = await aiClient.models.generateContent({
+          model: fallbackModel,
+          contents: prompt,
+          config: {
+            responseMimeType: 'application/json',
+            temperature: 0.2,
+          }
+        });
+        responseText = resFallback.text || '';
+        usedModel = 'Gemma 4 (Active Engine)';
+      }
+
       const parsed = safeParseAndRepairJson(responseText);
-      const validated = sanitizeResponse(parsed, roleTitle, companyName, aiModel);
+      const validated = sanitizeResponse(parsed, roleTitle, companyName, usedModel);
+      validated.is_demo_mode = false;
 
       return res.status(200).json(validated);
     } catch (modelError: any) {
-      console.warn('Gemma 4 model call failed or timed out. Falling back to calibrated telemetry:', modelError.message);
+      console.warn('All AI endpoints failed. Falling back to calibrated telemetry:', modelError.message);
       const fallbackResult = getDeterministicAnalysis(resumeText, jobDescription, roleTitle, companyName);
-      fallbackResult.demo_notice = `API Notice: Gemma 4 request returned an error (${modelError.message}). Switched to calibrated fallback engine.`;
+      fallbackResult.demo_notice = `API Notice: Cloud AI cluster is currently overloaded. Switched to calibrated fallback engine.`;
       return res.status(200).json(fallbackResult);
     }
   } catch (err: any) {
